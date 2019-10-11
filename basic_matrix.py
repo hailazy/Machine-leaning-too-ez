@@ -6,11 +6,11 @@ def createSquareMatrix(n):
     return matrix
 
 # Calculate det() of a matrix
-def determinant_recursive(matrix, total=0):
+def determinant_recursive(matrix_numpy, total=0):
     # convert numpy array to list
     # np.array([[1, 2], [3, 4]]) => [[1, 2], [3, 4]]
-    if  type(matrix) is not list:
-        matrix = matrix.tolist()
+    if  type(matrix_numpy) is not list:
+        matrix = matrix_numpy.tolist()
 
     # Store indices in list for row referencing
     indices = list(range(len(matrix)))
@@ -43,5 +43,8 @@ def determinant_recursive(matrix, total=0):
     return total
 
 # Calculate inverse()
-
+def inversion_matrix(matrix_np):
+    AM = matrix_np.tolist()
+    n = len(AM)
+    IM = np.eye(n)
 # Main
