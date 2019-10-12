@@ -9,7 +9,7 @@ def createSquareMatrix(n):
 def determinant_recursive(matrix_numpy, total=0):
     # convert numpy array to list
     # np.array([[1, 2], [3, 4]]) => [[1, 2], [3, 4]]
-    if  type(matrix_numpy) is not list:
+    if type(matrix_numpy) is not list:
         matrix = matrix_numpy.tolist()
 
     # Store indices in list for row referencing
@@ -47,4 +47,23 @@ def inversion_matrix(matrix_np):
     AM = matrix_np.tolist()
     n = len(AM)
     IM = np.eye(n)
+
+    indices = list(range(n))  # to allow flexible row referencing
+    for fd in range(n):  # fd stands for focus diagonal
+        fdScaler = 1.0 / AM[fd][fd]
+        # FIRST: scale fd row with fd inverse. 
+        for j in range(n):  # Use j to indicate column looping.
+            AM[fd][j] *= fdScaler
+            IM[fd][j] *= fdScaler
+
+            # SECOND: operate on all rows except fd row.
+        for i in indices[0:fd] + indices[fd + 1:]:  # *** skip row with fd in it.
+            crScaler = AM[i][fd]  # cr stands for "current row".
+            for j in range(n):  # cr - crScaler * fdRow, but one element at a time.
+                AM[i][j] = AM[i][j] - crScaler * AM[fd][j]
+                IM[i][j] = IM[i][j] - crScaler * IM[fd][j]
+
+    return np.multiply(matrix_np, IM)
+
 # Main
+print()
